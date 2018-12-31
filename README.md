@@ -15,6 +15,11 @@ npm install express-handlebars
 ```bash
 npm install body-parser
 ```
+or
+
+```bash
+npm install
+```
 
 ## Usage or To run
 
