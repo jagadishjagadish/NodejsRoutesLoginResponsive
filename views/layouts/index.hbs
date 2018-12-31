@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        
+        <link rel="stylesheet" href="./styles/style.css"/>
+       
+        <script>
+            $(document).ready(function () { 
+                $(".logged-user").append(localStorage.getItem("user")); //Get username from localstorage & display username
+                
+                //Display content on Home page
+                var displayData = function (data, selector) {
+                    $(".content-block").empty().append(data);
+                    $(".active").removeClass("active");
+                    selector.parent("li").addClass("active");
+                };
+                //GET vision handlebar template content & Display on home page
+                $(".vision-click").off().on("click", function () {
+                    var selector = $(this);
+                    $.ajax({
+                        url: "/vision",
+                        success: function (data) {
+                            displayData(data, selector);
+                        },
+                        error: function (err) {
+                            console.log(err);
+                        }    
+                    });
+                    return false;
+                });
+                $(".about-click").off().on("click", function () {
+                    var selector = $(this);
+                    $.ajax({
+                        url: "/about",
+                        success: function (data) {
+                            displayData(data, selector);
+                        },
+                        error: function (err) {
+                            console.log(err);
+                        }    
+                    });
+                    return false;
+                });
+                $(".contact-click").off().on("click", function () {
+                    var selector = $(this);
+                    $.ajax({
+                        url: "/contact",
+                        success: function (data) {
+                            displayData(data, selector);
+                        },
+                        error: function (err) {
+                            console.log(err);
+                        }    
+                    });
+                    return false;
+                });
+                //------- Log out -------
+                $(".log-out-icon").off().on("click", function () {
+                    window.location.href = "/";
+                });
+            });
+        </script>
+    </head>
+   
+    <body class="home-background">
+        <div class="home-layout">
+            <nav class="navbar navbar-inverse">
+              <div class="container-fluid">
+                <div class="navbar-header">
+                  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>                        
+                  </button>
+                  <a class="navbar-brand" href="#">Welcome</a>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                  <ul class="nav navbar-nav">
+                    <li class="active"><a href="">Home</a></li>
+                    <li><a href="" class="vision-click">Vision</a></li>
+                    <li><a href="" class="about-click">About</a></li>
+                    <li><a href="" class="contact-click">Contact</a></li>
+                  </ul>
+                  <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#" class="logged-user"><span class="glyphicon glyphicon-user"></span></a></li>
+                    <li><a href="#" class="log-out-icon"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                  </ul>
+                </div>
+              </div>
+            </nav>
+           
+            <div class="view-display">
+                <!-- Partials header -->
+                <header class="jumbotron text-center"> {{>header}} </header>
+                
+                <!-- Partials template - Changes template on menu options selection -->
+                <div class="content-block">Home template - content changes only here</div>
+                
+                <!-- Partials footer -->
+                <footer class="jumbotron text-center"> {{>footer}} </footer>
+            </div>
+        </div>
+    </body> 
+</html>
